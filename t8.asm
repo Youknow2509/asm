@@ -12,7 +12,6 @@
 MAIN PROC
     MOV AX, @DATA
     MOV DS, AX
-
     
     MOV AH, 9
     LEA DX, s1
