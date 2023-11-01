@@ -15,53 +15,62 @@
         int 21h  
         
         mov bx,10 ; gan bx = 10
-        mov cx, 0 ; gan cx = 0
+        mov cx, 0 ; gan cl = 0, ch 
 nhaptiep:        
+        ; nhap
         mov ah, 1
         int 21h
-        cmp al, 13
+
+        cmp al, 13 ; xem da enter chua
         je enter 
-        sub al, 48
-        mov cl, al
-        mov ax,a 
-        mul bx
-        add ax, cx
-        mov a, ax 
+        ; đổi chữ thành số
+        sub al, 48 
+
+        mov cl, al ; cl = al xu dung de loop
+        mov ax, a 
+
+        mul bx ; ax = al * 10
+        add ax, cx ; ax = ax + cx
+
+        mov a, ax  ; a = ax
         jmp nhaptiep
         
-enter:  mov ah, 9      
+enter:  ; in n = 
+        mov ah, 9      
         lea dx, s2
         int 21h
-     
-        mov bx, a
-        mov ax, 0
-        mov cx, 1
+        
+        mov bx, a ; bx = a
+        mov ax, 0 ; ax = 0
+        mov cx, 1 ; cx = 1
 congtiep:        
-        add ax, cx
-        add cx, 1
-        cmp cx, bx
+        add ax, cx ; ax = ax + cx
+        add cx, 1 ;  cx = cx + 1
+        cmp cx, bx ; cx ? bx
         jle congtiep 
         
-        mov bx, 10
-;        mov ax, a
-        mov cx, 0
+        mov bx, 10 ; bx = 10
+        mov cx, 0 ; cx = 0
 chiatiep:        
-        mov dx, 0
-        div bx
-        cmp ax, 0
+        mov dx, 0 ; dx = 0
+
+        div bx ; ax = ax / bx
+
+        cmp ax, 0 ; ax ? 0
         je kt
-        push dx
-        inc cl
+
+        push dx ; dx chua so du
+        inc cl ; cl = cl + 1
         jmp chiatiep 
         
-kt:     push dx
+kt:     push dx 
         inc cl
 intiep:        
         mov ah, 2
         pop dx
         add dl, 48
         int 21h
-        loop intiep 
+        loop intiep  ; loop cx lan
         
         mov ah,4
         int 21h
